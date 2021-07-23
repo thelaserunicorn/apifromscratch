@@ -1,9 +1,10 @@
-
+const Bootcamp = require('../models/Bootcamp')
 // Get all bootcamps
 // GET /api/v1/bootcamps
 // public
 
 exports.getBootcamps = (req, res, next) => {
+    
     res.status(200).json({ success: true, msg: 'list of all bootcamps'})
 }
 
