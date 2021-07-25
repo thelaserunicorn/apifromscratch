@@ -28,7 +28,8 @@ if(process.env.NODE_ENV === 'development'){
 
 
 
-app.use('/api/v1/bootcamps', bootcamps)
+app.use('/api/v1/bootcamps', bootcamps);
+app.use(errorHandler);
 
 
 const server = app.listen(PORT, console.log(`server running in ${process.env.NODE_ENV} mode on port ${PORT}`.yellow.bold))
