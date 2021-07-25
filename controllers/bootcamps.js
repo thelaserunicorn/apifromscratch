@@ -8,7 +8,35 @@ const Bootcamp = require('../models/Bootcamp');
 // @route     GET /api/v1/bootcamps
 // @access    Public
 exports.getBootcamps = asyncHandler(async (req, res, next) => {
-  const bootcamps = await Bootcamp.find();
+  let query;
+
+  const reqQuery = {...req.query};
+  const removeFields = ['select', 'sort']
+  removeFields.forEach(param => delete reqQuery[param]);
+
+
+  let queryStr = JSON.stringify(reqQuery);
+  queryStr = queryStr.replace(/\b(gt|gte|lt|lte|in)\b/g, match => `$${match}`)
+  console.log(queryStr)
+
+
+  query = Bootcamp.find(JSON.parse(queryStr))
+
+  if(req.query.select){
+    const fields = req.query.select.split(',').join(' ');
+    query = query.select(fields);
+    console.log(query)
+  }
+
+  if(req.query.sort){
+    const sortBy = req.query.sort.split(',').join(' ');
+    query = query.sort(sortBy);
+    console.log(query)
+  }else{
+    query = query.sort('-createdAt')
+  }
+
+  const bootcamps = await query;
   res.status(200).json({success:true, count: bootcamps.length, data:bootcamps});
 });
 
@@ -17,7 +45,6 @@ exports.getBootcamps = asyncHandler(async (req, res, next) => {
 // @access    Public
 exports.getBootcamp = asyncHandler(async (req, res, next) => {
   const bootcamp = await Bootcamp.findById(req.params.id);
-
   if (!bootcamp) {
     return next(
       new ErrorResponse(`Bootcamp not found with id of ${req.params.id}`, 404)
