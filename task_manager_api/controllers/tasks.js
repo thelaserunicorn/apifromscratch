@@ -3,19 +3,19 @@ const getAllTasks = (req, res) => {
 }
 
 const getTask = (req, res) => {
-    res.send("get one task from list")
+    res.json({id: req.params.id})
 }
 
 const createTask = (req, res) => {
-    res.send("create task")
+    res.json(req.body)
 }
 
 const deleteTask = (req, res) => {
-    res.send("delete a task")
+    res.json({id: req.params.id})
 }
 
 const updateTask = (req, res) => {
-    res.send("update task")
+    res.json({id: req.params.id})
 }
 
 
