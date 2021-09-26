@@ -9,6 +9,7 @@ const getAllTasks = async(req, res) => {
         res.status(500).json({msg: error})
     }
 }
+
 const createTask = async(req, res) => {
 
     try {
@@ -32,7 +33,6 @@ const getTask = async(req, res) => {
         res.status(500).json({msg: error})
     }
 }
-
 
 const deleteTask = async(req, res) => {
     try {
