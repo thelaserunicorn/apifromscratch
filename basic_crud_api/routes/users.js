@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const users = require("../user.json")
+let users = require("../user.json")
 const uuid = require("uuid")
 
 router.get(("/"), (req, res)=>{
@@ -19,5 +19,11 @@ router.get(("/:id"), (req, res)=>{
     const {id} = req.params
     const userQuery = users.find((user)=>user.id === id)
     res.send(userQuery)
+})
+
+router.delete(("/:id"), (req, res)=>{
+    const {id} = req.params
+    users.filter((user)=>user.id != id)
+    res.send(`user with id ${id} deleted`)
 })
 module.exports = router
